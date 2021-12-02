@@ -1,0 +1,50 @@
+<template>
+	<view class="content">
+		<u-tabs class="tabs" :is-scroll="false" :list="list" :current="activeIndex" @change="change" :duration='0.3'
+			active-color="#FF0000">
+		</u-tabs>
+		<view class="swiper">
+			<swiper class="swiper-container" :current="activeIndex" @change="changeCurrentIndex">
+				<swiper-item v-for="(item,index) in list" :key="index">
+					<!-- 滚动区域 -->
+					<scroll-view class="swiper-container-list" scroll-y="true">
+						{{item.name}}
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				list: [{
+					name: '最新',
+				}, {
+					name: '推荐',
+				}, {
+					name: '收藏',
+				}, {
+					name: '环保百科',
+				}],
+				activeIndex: 0
+			}
+		},
+		methods: {
+			change(index) {
+				this.activeIndex = index;
+			},
+			changeCurrentIndex(e) {
+				const {
+					current
+				} = e.detail;
+				this.activeIndex = current;
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+</style>
