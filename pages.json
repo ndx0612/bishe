@@ -33,12 +33,12 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "#ffffff",
 		"navigationBarTitleText": "uView",
-		"navigationBarBackgroundColor": "#ff0000",
+		"navigationBarBackgroundColor": "#0faeff",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
 		"color": "#909399",
-		"selectedColor": "#FF0000", // 字体选中以后颜色
+		"selectedColor": "#0faeff", // 字体选中以后颜色
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{

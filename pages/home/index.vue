@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<u-tabs class="tabs" :is-scroll="false" :list="list" :current="activeIndex" @change="change" :duration='0.3'
-			active-color="#FF0000">
+			active-color="#0faeff">
 		</u-tabs>
 		<view class="swiper">
 			<swiper class="swiper-container" :current="activeIndex" @change="changeCurrentIndex">
