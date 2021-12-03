@@ -6,9 +6,10 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "登录",
+				"navigationBarTitleText": "用户登录",
 				"enablePullDownRefresh": false,
-				"navigationStyle": "custom" // 取消原生导航栏
+				"autoBackButton": false // 隐藏返回按钮
+				// "navigationStyle": "custom" // 取消原生导航栏
 			}
 		},
 		{
@@ -28,10 +29,22 @@
 				"navigationBarTitleText": "发现",
 				"enablePullDownRefresh": false
 			}
+		}, {
+			"path": "pages/login/reg",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/login/iPhone-login",
+			"style": {
+				"navigationBarTitleText": "手机号登录",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "#ffffff",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uView",
 		"navigationBarBackgroundColor": "#0faeff",
 		"backgroundColor": "#F8F8F8"
