@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<!-- 表单 -->
+		<!-- 登录表单 -->
 		<view>
 			<u-form :model="form" ref="uForm">
 				<u-form-item label="账号" :label-width="labelWidth" :label-align="labelAlign">
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+	import md5Libs from "uview-ui/libs/function/md5";
 	export default {
 		data() {
 			return {
@@ -37,19 +38,43 @@
 		methods: {
 			// 登录功能
 			login() {
-				if ((this.form.name == '1') && (this.form.password == '1')) {
-					this.$refs.uToast.show({
-						title: '登录成功',
-						type: 'success',
-						url: 'pages/home/index',
-						isTab: true
-					})
-				} else {
-					this.$refs.uToast.show({
-						title: '账号或密码密码错误',
-						type: 'warning',
-					})
-				}
+				let userInfo = this.$u.deepClone(this.form); // 深度拷贝
+				userInfo.password = md5Libs.md5(userInfo.password) // 对密码进行md5加密
+				uniCloud.callFunction({
+					name: "user-login",
+					data: {
+						from: userInfo
+					},
+					success: (res) => {
+						console.log(res.result)
+						if (res.result.msg == "数据返回成功") {
+							this.$refs.uToast.show({
+								title: '登录成功',
+								type: 'success',
+								url: 'pages/home/index',
+								isTab: true
+							})
+						} else {
+							this.$refs.uToast.show({
+								title: '账号或密码错误',
+								type: 'warning',
+							})
+						}
+					}
+				})
+				// if ((this.form.name == '1') && (this.form.password == '1')) {
+				// 	this.$refs.uToast.show({
+				// 		title: '登录成功',
+				// 		type: 'success',
+				// 		url: 'pages/home/index',
+				// 		isTab: true
+				// 	})
+				// } else {
+				// 	this.$refs.uToast.show({
+				// 		title: '账号或密码密码错误',
+				// 		type: 'warning',
+				// 	})
+				// }
 			},
 			// 跳转用户注册
 			goReg() {

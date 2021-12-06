@@ -19,6 +19,7 @@
 </template>
 
 <script>
+	import md5Libs from "uview-ui/libs/function/md5";
 	export default {
 		data() {
 			return {
@@ -46,10 +47,29 @@
 						type: 'warning',
 					})
 				} else {
-					this.$refs.uToast.show({
-						title: '注册成功',
-						type: 'success',
-						url: '/pages/login/login'
+					// 输入没有问题
+					let userInfo = this.$u.deepClone(this.form);
+					userInfo.password = md5Libs.md5(userInfo.password)
+					console.log(userInfo)
+					uniCloud.callFunction({
+						name: "user-reg",
+						data: {
+							from: userInfo
+						},
+						success: (res) => {
+							if (res.result.msg == "用户已经存在") {
+								this.$refs.uToast.show({
+									title: '用户已经存在',
+									type: 'warning',
+								})
+							} else {
+								this.$refs.uToast.show({
+									title: '注册成功',
+									type: 'success',
+									url: '/pages/login/login'
+								})
+							}
+						}
 					})
 				}
 			}
