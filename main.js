@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App'
-
+import store from '@/store';
+let vuexStore = require("@/store/$u.mixin.js");
+Vue.mixin(vuexStore);
 Vue.config.productionTip = false
 
 App.mpType = 'app'
@@ -10,6 +12,7 @@ import uView from 'uview-ui'
 Vue.use(uView);
 
 const app = new Vue({
-    ...App
+	store,
+	...App
 })
 app.$mount()

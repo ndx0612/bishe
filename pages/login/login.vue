@@ -46,8 +46,10 @@
 						from: userInfo
 					},
 					success: (res) => {
-						console.log(res.result)
+						console.log(res.result);
 						if (res.result.msg == "数据返回成功") {
+							// 将用户_id存入vuex中
+							this.$u.vuex('vuex_userId', res.result.data[0]._id);
 							this.$refs.uToast.show({
 								title: '登录成功',
 								type: 'success',
@@ -62,19 +64,6 @@
 						}
 					}
 				})
-				// if ((this.form.name == '1') && (this.form.password == '1')) {
-				// 	this.$refs.uToast.show({
-				// 		title: '登录成功',
-				// 		type: 'success',
-				// 		url: 'pages/home/index',
-				// 		isTab: true
-				// 	})
-				// } else {
-				// 	this.$refs.uToast.show({
-				// 		title: '账号或密码密码错误',
-				// 		type: 'warning',
-				// 	})
-				// }
 			},
 			// 跳转用户注册
 			goReg() {
