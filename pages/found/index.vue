@@ -1,10 +1,7 @@
 <template>
 	<view>
 		<view>
-			版本号为：{{vuex_userId}}
-		</view>
-		<view>
-			<<琵琶行>>的作者为{{vuex_user.name}}
+			用户id为：{{vuex_userId}}
 		</view>
 		<u-button @click="modifyVuex">修改变量</u-button>
 	</view>

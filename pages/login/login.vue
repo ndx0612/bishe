@@ -35,6 +35,15 @@
 				},
 			}
 		},
+		// 判断token(_id)是否存在,如果存在,直接进入页面,不存在则进入登录
+		onLoad() {
+			if (this.vuex_userId) {
+				this.$u.route({
+					url: 'pages/home/index',
+					type: 'reLaunch'
+				})
+			}
+		},
 		methods: {
 			// 登录功能
 			login() {
@@ -48,8 +57,9 @@
 					success: (res) => {
 						console.log(res.result);
 						if (res.result.msg == "数据返回成功") {
-							// 将用户_id存入vuex中
-							this.$u.vuex('vuex_userId', res.result.data[0]._id);
+							this.$u.vuex('vuex_userId', res.result.data[0]._id); // 将用户_id存入vuex中
+							this.$u.vuex('vuex_userName', res.result.data[0].author_name); // 将用户昵称存入
+							this.$u.vuex('vuex_Avatar', res.result.data[0].Avatar); // 将用户头像存入
 							this.$refs.uToast.show({
 								title: '登录成功',
 								type: 'success',
