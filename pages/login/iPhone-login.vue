@@ -25,7 +25,6 @@
 				codeText: '', // 验证码倒计时
 				labelWidth: '150rpx', // label宽度,可选auto
 				labelAlign: 'center', // label对齐方式
-				code_verify: '', // 获取到的验证码
 				list: [
 					"如果手机号未绑定，系统会为您自动创建新用户，默认账号为手机号，密码123456，请及时修改密码"
 				]
@@ -57,8 +56,9 @@
 								phone: this.mobile
 							},
 							success: (res) => {
-								this.code_verify = res.result.data.code;
-								console.log(this.code_verify)
+								// 获取前端收到的验证码保存到vuex中
+								this.$u.vuex('vuex_code', res.result.data.mobileCode);
+								console.log(this.vuex_code) 
 							}
 						})
 					} else {
@@ -70,47 +70,52 @@
 			},
 			// 手机号登录
 			login() {
-				uniCloud.callFunction({
-					name: "user-phoneLogin",
-					data: {
-						phone: this.mobile
-					},
-					success: (res) => {
-						console.log(res)
-						// 如果手机号不存在，则新建用户，用户名为手机号，密码123456
-						if (res.result.code == 201) {
-							this.$u.vuex('vuex_userId', res.result.data[0]._id);
-							this.$refs.uToast.show({
-								title: '为您自动创建新用户',
-								type: 'success',
-								url: 'pages/home/index',
-								isTab: true
-							})
-						} else {
-							this.$u.vuex('vuex_userId', res.result.data[0]._id);
-							this.$refs.uToast.show({
-								title: '登录成功',
-								type: 'success',
-								url: 'pages/home/index',
-								isTab: true
-							})
+				// 判断vuex的验证码是否和前端收到的系统
+				if (this.code == this.vuex_code) {
+					uniCloud.callFunction({
+						name: "user-phoneLogin",
+						data: {
+							phone: this.mobile
+						},
+						success: (res) => {
+							console.log(res)
+							// 如果手机号不存在，则新建用户，并且提示
+							if (res.result.code == 201) {
+								this.$u.vuex('vuex_userId', res.result.data[0]._id);
+								this.$u.vuex('vuex_userName', res.result.data[0].author_name); // 将用户昵称存入
+								this.$u.vuex('vuex_Avatar', res.result.data[0].Avatar); // 将用户头像存入
+								this.$refs.uToast.show({
+									title: '为您自动创建新用户',
+									type: 'success',
+									url: 'pages/home/index',
+									isTab: true
+								})
+							} else {
+								this.$u.vuex('vuex_userId', res.result.data[0]._id);
+								this.$u.vuex('vuex_userName', res.result.data[0].author_name); // 将用户昵称存入
+								this.$u.vuex('vuex_Avatar', res.result.data[0].Avatar); // 将用户头像存入
+								this.$refs.uToast.show({
+									title: '登录成功',
+									type: 'success',
+									url: 'pages/home/index',
+									isTab: true
+								})
+							}
 						}
-					}
-				})
-				// // 登录成功
-				// if (this.code == this.code_verify) {
-				// 	uniCloud.callFunction({
-				// 		name: "user-phoneLogin",
-				// 		data: {
-				// 			phone: this.mobile
-				// 		},
-				// 		success: (res) => {
-				// 			console.log(res)
-				// 		}
-				// 	})
-				// } else {
-				// 	this.$u.toast('验证码输入错误');
-				// }
+					})
+					// 测试：上传手机号并且打印结果
+					// uniCloud.callFunction({
+					// 	name: "user-phoneLogin",
+					// 	data: {
+					// 		phone: this.mobile
+					// 	},
+					// 	success: (res) => {
+					// 		console.log(res)
+					// 	}
+					// })
+				} else {
+					this.$u.toast('验证码输入错误');
+				}
 			}
 		}
 	}

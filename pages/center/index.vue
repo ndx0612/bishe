@@ -60,6 +60,7 @@
 		methods: {
 			// 退出登录
 			Logout() {
+				// 清空用户_id
 				this.$u.vuex('vuex_userId', null);
 				uni.showLoading({
 					title: '正在退出登录'
@@ -70,7 +71,6 @@
 						url: '/pages/login/login'
 					})
 				}, 1000);
-
 			}
 		}
 	}
