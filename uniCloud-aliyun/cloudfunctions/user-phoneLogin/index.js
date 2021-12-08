@@ -24,14 +24,17 @@ exports.main = async (event, context) => {
 		collection.add({
 			...def
 		});
+		const res = await collection.where({
+			phone
+		}).get()
 		return {
-			code: 200,
-			msg: "用户不存在,创建新用户"
+			code: 201,
+			data: res.data
 		}
 	} else {
 		return {
 			code: 200,
-			data: res
+			data: res.data
 		}
 	}
 };

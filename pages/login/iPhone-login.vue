@@ -12,6 +12,7 @@
 			<u-verification-code ref="uCode" @change="codeChange"></u-verification-code>
 		</view>
 		<u-button class="btn" @click="login">登录</u-button>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -26,7 +27,7 @@
 				labelAlign: 'center', // label对齐方式
 				code_verify: '', // 获取到的验证码
 				list: [
-					"如果手机号不存在，系统会为您自动创建新用户，默认账号为手机号，密码123456，请及时修改密码"
+					"如果手机号未绑定，系统会为您自动创建新用户，默认账号为手机号，密码123456，请及时修改密码"
 				]
 			}
 		},
@@ -75,8 +76,25 @@
 						phone: this.mobile
 					},
 					success: (res) => {
-						// 如果手机号不存在，则新建用户，用户名为手机号，密码123456
 						console.log(res)
+						// 如果手机号不存在，则新建用户，用户名为手机号，密码123456
+						if (res.result.code == 201) {
+							this.$u.vuex('vuex_userId', res.result.data[0]._id);
+							this.$refs.uToast.show({
+								title: '为您自动创建新用户',
+								type: 'success',
+								url: 'pages/home/index',
+								isTab: true
+							})
+						} else {
+							this.$u.vuex('vuex_userId', res.result.data[0]._id);
+							this.$refs.uToast.show({
+								title: '登录成功',
+								type: 'success',
+								url: 'pages/home/index',
+								isTab: true
+							})
+						}
 					}
 				})
 				// // 登录成功
