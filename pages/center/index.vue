@@ -5,43 +5,43 @@
 			<text>Hi, {{this.vuex_userName}}</text>
 		</view>
 		<view class="set-ul">
-			<view class="set-li">
-				<view>
+			<navigator class="set-li" url="./change-pwd">
+				<view >
 					<u-icon name="lock" color="#0faeff" size="28"></u-icon>
 					<text>修改密码</text>
 				</view>
 				<u-icon name="arrow-right" color="#858585" size="28"></u-icon>
-			</view>
-			<view class="set-li">
+			</navigator>
+			<navigator class="set-li" url="./bind-phone">
 				<view>
 					<u-icon name="phone" color="#0faeff" size="28"></u-icon>
 					<text>绑定手机号</text>
 				</view>
 				<u-icon name="arrow-right" color="#858585" size="28"></u-icon>
-			</view>
+			</navigator>
 			<!-- <u-line color="#0faeff"></u-line> -->
 			<u-line class="u-line"></u-line>
-			<view class="set-li">
+			<navigator class="set-li" url="./about">
 				<view>
 					<u-icon name="error-circle" color="#0faeff" size="28"></u-icon>
 					<text>关于</text>
 				</view>
 				<u-icon name="arrow-right" color="#858585" size="28"></u-icon>
-			</view>
-			<view class="set-li">
+			</navigator>
+			<navigator class="set-li" url="./feedback">
 				<view>
 					<u-icon name="zhuanfa" color="#0faeff" size="28"></u-icon>
-					<text>帮助和反馈</text>
+					<text>提交反馈</text>
 				</view>
 				<u-icon name="arrow-right" color="#858585" size="28"></u-icon>
-			</view>
-			<view class="set-li">
+			</navigator>
+			<navigator class="set-li"url="./check-update">
 				<view>
 					<u-icon name="question-circle" color="#0faeff" size="28"></u-icon>
 					<text>检查更新</text>
 				</view>
 				<u-icon name="arrow-right" color="#858585" size="28"></u-icon>
-			</view>
+			</navigator>
 		</view>
 		<u-button class="btn" @click="Logout">退出登录</u-button>
 	</view>

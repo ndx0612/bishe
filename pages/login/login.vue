@@ -60,6 +60,7 @@
 							this.$u.vuex('vuex_userId', res.result.data[0]._id); // 将用户_id存入vuex中
 							this.$u.vuex('vuex_userName', res.result.data[0].author_name); // 将用户昵称存入
 							this.$u.vuex('vuex_Avatar', res.result.data[0].Avatar); // 将用户头像存入
+							this.$u.vuex('vuex_phone', res.result.data[0].phone); // 将用户手机号存入
 							this.$refs.uToast.show({
 								title: '登录成功',
 								type: 'success',

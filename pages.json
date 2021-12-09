@@ -41,12 +41,48 @@
 				"navigationBarTitleText": "手机号登录",
 				"enablePullDownRefresh": false
 			}
-		},{
+		}, {
 			"path": "pages/search/search",
 			"style": {
 				"navigationBarTitleText": "搜索",
 				"enablePullDownRefresh": false
 			}
+		}, {
+			"path": "pages/center/change-pwd",
+			"style": {
+				"navigationBarTitleText": "修改密码",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/center/bind-phone",
+			"style": {
+				"navigationBarTitleText": "手机绑定",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/center/about",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/center/feedback",
+			"style": {
+				"navigationBarTitleText": "提交反馈",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/center/check-update",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
 		}
 	],
 	"globalStyle": {

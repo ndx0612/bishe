@@ -1,18 +1,16 @@
 <template>
 	<view>
 		<view>
-			<view>
-				<u-notice-bar mode="horizontal" :list="list"></u-notice-bar>
-			</view>
-			<u-field v-model="mobile" label="手机号" placeholder="请填写手机号"></u-field>
-			<u-field v-model="code" label="验证码" placeholder="请填写验证码">
+			<u-field v-model="mobile" label="手机号" placeholder="请填写手机号" :disabled='isBinded'></u-field>
+			<u-field v-model="code" label="验证码" placeholder="请填写验证码" v-if="!isBinded">
 				<u-button size="mini" slot="right" type="success" @click="getCode">{{codeText}}</u-button>
 			</u-field>
 			<!-- 验证码倒计时 -->
 			<u-verification-code ref="uCode" @change="codeChange"></u-verification-code>
+			<u-button class="btn" @click="bind" v-if="!isBinded">绑定</u-button>
+			<u-button class="btn" v-else>手机已绑定</u-button>
+			<u-toast ref="uToast" />
 		</view>
-		<u-button class="btn" @click="login">登录</u-button>
-		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -23,11 +21,16 @@
 				mobile: '',
 				code: '',
 				codeText: '', // 验证码倒计时
+				pwd: 'password', // 输入框类型
 				labelWidth: '150rpx', // label宽度,可选auto
 				labelAlign: 'center', // label对齐方式
-				list: [
-					"如果手机号未绑定，系统会为您自动创建新用户，账号为手机号，默认密码123456，请及时修改密码"
-				]
+				isBinded: false // 是否绑定过手机
+			}
+		},
+		onLoad() {
+			if (this.vuex_phone.length == 11) {
+				this.mobile = this.vuex_phone;
+				this.isBinded = true;
 			}
 		},
 		methods: {
@@ -35,7 +38,7 @@
 			codeChange(text) {
 				this.codeText = text;
 			},
-			// 发送验证码后提示信息
+			// 倒计时
 			getCode() {
 				if (this.$refs.uCode.canGetCode) {
 					// 手机号码验证
@@ -68,66 +71,54 @@
 					this.$u.toast('倒计时结束后再发送');
 				}
 			},
-			// 手机号登录
-			login() {
-				// 判断vuex的验证码是否和前端收到的系统
+			// 绑定手机
+			bind() {
 				if (this.code == this.vuex_code) {
 					uniCloud.callFunction({
-						name: "user-phoneLogin",
+						name: 'bind_phone',
 						data: {
+							id: this.vuex_userId,
 							phone: this.mobile
 						},
 						success: (res) => {
 							console.log(res)
-							// 如果手机号不存在，则新建用户，并且提示
 							if (res.result.code == 201) {
-								this.$u.vuex('vuex_userId', res.result.data[0]._id); // 将用户_id存入vuex中
-								this.$u.vuex('vuex_userName', res.result.data[0].author_name); // 将用户昵称存入
-								this.$u.vuex('vuex_Avatar', res.result.data[0].Avatar); // 将用户头像存入
-								this.$u.vuex('vuex_phone', res.result.data[0].phone); // 将用户手机号存入
 								this.$refs.uToast.show({
-									title: '为您自动创建新用户',
-									type: 'success',
-									url: 'pages/home/index',
-									isTab: true
+									title: '手机已被绑定',
+									type: 'warning',
 								})
 							} else {
-								this.$u.vuex('vuex_userId', res.result.data[0]._id); // 将用户_id存入vuex中
-								this.$u.vuex('vuex_userName', res.result.data[0].author_name); // 将用户昵称存入
-								this.$u.vuex('vuex_Avatar', res.result.data[0].Avatar); // 将用户头像存入
 								this.$u.vuex('vuex_phone', res.result.data[0].phone); // 将用户手机号存入
 								this.$refs.uToast.show({
-									title: '登录成功',
+									title: '手机绑定成功',
 									type: 'success',
-									url: 'pages/home/index',
+									url: 'pages/center/index',
 									isTab: true
 								})
 							}
 						}
 					})
-					// 测试：上传手机号并且打印结果
-					// uniCloud.callFunction({
-					// 	name: "user-phoneLogin",
-					// 	data: {
-					// 		phone: this.mobile
-					// 	},
-					// 	success: (res) => {
-					// 		console.log(res)
-					// 	}
-					// })
+				} else if (this.code == '') {
+					this.$refs.uToast.show({
+						title: '请获取验证码',
+						type: 'warning',
+					})
 				} else {
-					this.$u.toast('验证码输入错误');
+					this.$refs.uToast.show({
+						title: '验证码输入错误',
+						type: 'warning',
+					})
 				}
 			}
 		}
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.btn {
 		margin: 50rpx auto;
-		width: 400rpx;
-		background-color: #0faeff;
+		width: 300rpx;
+		background-color: #00aaff;
 		color: #FFFFFF;
 	}
 </style>
