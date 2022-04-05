@@ -4,6 +4,7 @@
 		<view class="wrap">
 			<u-swiper :list="list" :title="true"></u-swiper>
 		</view>
+		<!-- 搜索功能 -->
 		<view class="search">
 			<u-search class="search-text" placeholder="请输入垃圾名称" v-model="keyword" @search="gotoSeach()"
 				@custom="gotoSeach()"></u-search>
@@ -16,7 +17,11 @@
 				拍照识别
 			</view>
 		</view>
-		<!-- <button type="default" @click="uploadFile">上传图片</button> -->
+		<!-- 选择列表 -->
+		<view>
+			<u-select v-model="show" :list="searchRes" @confirm="confirm"></u-select>
+			<!-- <u-button @click="show = true">打开</u-button> -->
+		</view>
 	</view>
 </template>
 
@@ -37,28 +42,103 @@
 						title: '标题3'
 					}
 				],
-				keyword: ''
+				keyword: '',
+				token: '',
+				show: false,
+				searchRes: [],
 			}
+		},
+		onShow() {
+			this.getToken();
 		},
 		methods: {
 			// 点击搜索按钮
 			gotoSeach() {
-				console.log(this.keyword)
+				this.$u.route('/pages/search/search-show', {
+					keyword: this.keyword
+				});
+			},
+
+			// 获取百度token
+			getToken() {
+				uniCloud.callFunction({
+						name: 'getBaiduToken',
+						data: {
+							apiKey: 'padRERoch0xjSccLpsMlszM8',
+							secretKey: 'cEuvvE7IsdnuaMZhdr2ZBoa92qyrR0ra'
+						}
+					})
+					.then(res => {
+						this.token = res.result.access_token;
+					});
+			},
+			confirm(e) {
+				console.log(e);
+				console.log(e[0].label);
+				this.$u.route('/pages/search/search-show', {
+					keyword: e[0].label
+				});
 			},
 
 			// 上传图片
 			uploadFile() {
+				let that = this;
 				uni.chooseImage({
 					success(res) {
-						console.log(res.tempFilePaths[0])
-						uniCloud.uploadFile({
-							cloudPath: '01.png', // 图片名称
-							filePath: res.tempFilePaths[0] // 图片路径
-						})
+						console.log(res.tempFilePaths[0]);
+
+						// 上传图片到云端
+						// uniCloud.uploadFile({
+						// 	cloudPath: '01.png', // 图片名称
+						// 	filePath: res.tempFilePaths[0] // 图片路径
+						// })
+
+						// 图片转base64
+						var img = res.tempFilePaths[0]; //imgurl 就是你的图片路径  
+
+						function getBase64Image(img) {
+							var canvas = document.createElement("canvas");
+							canvas.width = img.width;
+							canvas.height = img.height;
+							var ctx = canvas.getContext("2d");
+							ctx.drawImage(img, 0, 0, img.width, img.height);
+							var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+							var dataURL = canvas.toDataURL("image/" + ext);
+							return dataURL;
+						}
+
+						var image = new Image();
+						image.src = img;
+						image.onload = function() {
+							uniCloud.callFunction({
+									name: 'imgScan',
+									data: {
+										token: that.token,
+										image: getBase64Image(image)
+									}
+								})
+								.then(res => {
+									let objArr = res.result.data.result;
+									const keyMap = {
+										keyword: "label",
+									};
+									for (let i = 0; i < objArr.length; i++) {
+										let obj = objArr[i];
+										for (let key in obj) {
+											let newKey = keyMap[key];
+											if (newKey) {
+												obj[newKey] = obj[key];
+												delete obj[key];
+											}
+										}
+									}
+									that.searchRes = objArr;
+									that.show = true;
+								});
+						}
 					}
 				})
 			}
-
 		}
 	}
 </script>

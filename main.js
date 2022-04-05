@@ -11,6 +11,23 @@ App.mpType = 'app'
 import uView from 'uview-ui'
 Vue.use(uView);
 
+// 引入公共函数
+import globalFunc from '@/utils/base64.js'
+Vue.use(globalFunc, app);
+
+Vue.mixin({
+	methods: {
+		//去其他页面
+		goOtherPage(path, params = {}, animationType = "pop-in") {
+			this.$u.route({
+				url: path,
+				params,
+				animationType
+			})
+		},
+	},
+});
+
 const app = new Vue({
 	store,
 	...App

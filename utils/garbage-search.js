@@ -25,7 +25,7 @@ function search(text, successCallback) {
 
 		}
 	})
-	console.log('searchResult:' + JSON.stringify(searchResult));
+	// console.log('searchResult:' + JSON.stringify(searchResult));
 	return successCallback(searchResult);
 }
 module.exports = {

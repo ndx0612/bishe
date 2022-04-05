@@ -1,15 +1,57 @@
 <template>
 	<view>
-		<view>
+		<!-- 		<view>
 			用户id为：{{vuex_userId}}
 		</view>
 		<u-button @click="modifyVuex">修改变量</u-button>
-		<u-toast ref="uToast" />
+		<u-toast ref="uToast" /> -->
+
+		<view class="question-box">
+			<text>{{goodsIndex+1}}.{{goods[goodsIndex]}}属于什么类型垃圾？</text>
+			<view>
+				<u-radio-group class="question-options" v-model="value" @change="radioGroupChange">
+					<u-radio class="question-li" @change="radioChange" v-for="(item, index) in list" :key="index"
+						:name="item.name" :disabled="item.disabled">
+						{{item.name}}
+					</u-radio>
+				</u-radio-group>
+			</view>
+			<view class="next-li">
+				<u-button type="success" @click="nextProblem">{{nextQuestion}}</u-button>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	export default {
+		data() {
+			return {
+				list: [{
+						name: '可回收物',
+						disabled: false
+					},
+					{
+						name: '有害垃圾',
+						disabled: false
+					},
+					{
+						name: '厨余垃圾',
+						disabled: false
+					},
+					{
+						name: '其他垃圾',
+						disabled: false
+					},
+				],
+				// u-radio-group的v-model绑定的值如果设置为某个radio的name，就会被默认选中
+				value: '',
+				goods: ['书本', '报纸', '铝', '啤酒瓶', '纸巾', '塑料瓶', '易拉罐', '玻璃', '废铁', 'A4纸'],
+				goodsIndex: 0,
+				score: 0,
+				nextQuestion: '下一题',
+			};
+		},
 		methods: {
 			modifyVuex() {
 				this.$refs.uToast.show({
@@ -19,7 +61,58 @@
 				// const currentNum = Math.random().toString().substr(2, 6);
 				// console.log(this.vuex_userId)
 				// console.log(currentNum)
+			},
+			// 选中某个单选框时，由radio时触发
+			radioChange(e) {
+				// console.log(e);
+			},
+			// 选中任一radio时，由radio-group触发
+			radioGroupChange(e) {
+				// console.log(e);
+			},
+			nextProblem() {
+				if (this.goodsIndex == 8) {
+					this.nextQuestion = '提交'
+					// 跳转页面
+					uni.navigateTo({
+						url: "/pages/found/showScore",
+					});
+				}
+				console.log(this.goodsIndex);
+				if (this.value == '可回收物') {
+					this.goodsIndex++;
+					this.value = '';
+					this.score += 10;
+				} else {
+					this.goodsIndex++;
+					this.value = '';
+				}
+				console.log('score:' + this.score)
 			}
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	.question-box {
+		width: 600rpx;
+		height: 800rpx;
+		border: solid 2rpx #0FAEFF;
+		margin: 100rpx auto;
+		border-radius: 5rpx;
+		padding: 30rpx;
+
+		.question-options {
+			display: flex;
+			flex-direction: column;
+			width: 300rpx;
+			height: 300rpx;
+			justify-content: space-around;
+		}
+
+		.next-li {
+			margin: 30rpx auto;
+			width: 500rpx;
+		}
+	}
+</style>

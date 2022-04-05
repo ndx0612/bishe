@@ -67,14 +67,12 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
 			"path": "pages/center/feedback",
 			"style": {
 				"navigationBarTitleText": "提交反馈",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
 			"path": "pages/center/check-update",
 			"style": {
@@ -82,10 +80,30 @@
 				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
 			}
-
+		}, {
+			"path": "pages/search/search-text",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/search/search-show",
+			"style": {
+				"navigationBarTitleText": "搜索结果",
+				"enablePullDownRefresh": false
+			}
 		}
 	    ,{
-            "path" : "pages/search/search-text",
+            "path" : "pages/article/fullText",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/found/showScore",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

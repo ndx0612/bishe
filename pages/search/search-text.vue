@@ -1,3 +1,4 @@
+<!-- 已关闭 -->
 <template>
 	<view>
 		<view class="cu-bar bg-darkGray search" style="margin: 20px;">
@@ -57,7 +58,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.bg-darkGray {
 		background-color: #f6f6f6;
 		color: #ffffff;
