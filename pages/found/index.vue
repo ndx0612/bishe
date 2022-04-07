@@ -71,18 +71,23 @@
 				// console.log(e);
 			},
 			nextProblem() {
-				if (this.goodsIndex == 8) {
+				if (this.goodsIndex >= 8) {
 					this.nextQuestion = '提交'
 					// 跳转页面
-					uni.navigateTo({
-						url: "/pages/found/showScore",
-					});
+					if (this.goodsIndex == 9) {
+						this.goodsIndex = 0;
+						this.score = 0;
+						uni.navigateTo({
+							url: "/pages/found/showScore",
+						});
+					}
 				}
 				console.log(this.goodsIndex);
 				if (this.value == '可回收物') {
 					this.goodsIndex++;
 					this.value = '';
 					this.score += 10;
+					this.$u.vuex('vuex_score', this.score); // 将成绩存入vuex中
 				} else {
 					this.goodsIndex++;
 					this.value = '';

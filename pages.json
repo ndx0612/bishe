@@ -92,18 +92,23 @@
 				"navigationBarTitleText": "搜索结果",
 				"enablePullDownRefresh": false
 			}
+		}, {
+			"path": "pages/article/fullText",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/found/showScore",
+			"style": {
+				"navigationBarTitleText": "考试成绩",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	    ,{
-            "path" : "pages/article/fullText",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/found/showScore",
+            "path" : "pages/found/scoreSort",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
