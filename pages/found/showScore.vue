@@ -9,7 +9,9 @@
 			<text>答对：{{this.vuex_score/10}}题</text>
 			<text>错误：{{10-this.vuex_score/10}}题</text>
 		</view>
-		<button type="default" @click="toIndex">查看排行</button>
+		<!-- <button type="default" @click="toIndex">查看排行</button> -->
+		<u-button type="error" @click="toScoresort">查看排行</u-button>
+		<u-button type="success" @click="toIndex">返回首页</u-button>
 	</view>
 </template>
 
@@ -21,7 +23,7 @@
 			};
 		},
 		methods: {
-			toIndex() {
+			toScoresort() {
 				// 提交成绩
 				uniCloud.callFunction({
 					name: 'upload_grades',
@@ -34,15 +36,16 @@
 					}
 				})
 
-				// 页面跳转
-				// uni.switchTab({
-				// 	url: '/pages/center/index'
-				// })
-
 				uni.navigateTo({
 					url: "/pages/found/scoreSort",
 				});
 
+			},
+			toIndex() {
+				// 页面跳转
+				uni.switchTab({
+					url: '/pages/home/index'
+				})
 			}
 		}
 	}
@@ -56,7 +59,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		height: 700rpx;
+		height: 900rpx;
 		justify-content: space-around;
 
 		.score-title {

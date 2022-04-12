@@ -113,6 +113,12 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/center/set-PersonaInfo",
+			"style": {
+				"navigationBarTitleText": "个人信息",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {

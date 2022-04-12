@@ -1,12 +1,12 @@
 <template>
 	<view class="content">
-		<view class="header">
+		<view class="header" @click="goPersonaInfo">
 			<u-avatar class="avatar" :src="src" :size="120"></u-avatar>
 			<text>Hi, {{this.vuex_userName}}</text>
 		</view>
 		<view class="set-ul">
 			<navigator class="set-li" url="./change-pwd">
-				<view >
+				<view>
 					<u-icon name="lock" color="#0faeff" size="28"></u-icon>
 					<text>修改密码</text>
 				</view>
@@ -35,7 +35,7 @@
 				</view>
 				<u-icon name="arrow-right" color="#858585" size="28"></u-icon>
 			</navigator>
-			<navigator class="set-li"url="./check-update">
+			<navigator class="set-li" url="./check-update">
 				<view>
 					<u-icon name="question-circle" color="#0faeff" size="28"></u-icon>
 					<text>检查更新</text>
@@ -71,6 +71,13 @@
 						url: '/pages/login/login'
 					})
 				}, 1000);
+			},
+
+			// 设置个人信息
+			goPersonaInfo() {
+				uni.navigateTo({
+					url: "/pages/center/set-PersonaInfo",
+				});
 			}
 		}
 	}

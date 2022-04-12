@@ -1,6 +1,5 @@
 <template>
 	<view class="lisiItem">
-		<button type="default" @click="print">按钮</button>
 		<view class="u-border-bottom" v-for="(news,i) in newsList" :key="i">
 			<!-- 三图标签 -->
 			<view class="three-img" v-if="news.imgs.length>=3"
