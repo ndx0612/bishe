@@ -22,9 +22,27 @@
 		},
 		methods: {
 			toIndex() {
-				uni.switchTab({
-					url: '/pages/center/index'
+				// 提交成绩
+				uniCloud.callFunction({
+					name: 'upload_grades',
+					data: {
+						score: this.vuex_score,
+						id: this.vuex_userId
+					},
+					success: (res) => {
+						console.log(res.result)
+					}
 				})
+
+				// 页面跳转
+				// uni.switchTab({
+				// 	url: '/pages/center/index'
+				// })
+
+				uni.navigateTo({
+					url: "/pages/found/scoreSort",
+				});
+
 			}
 		}
 	}

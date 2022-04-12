@@ -106,17 +106,15 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/found/scoreSort",
+			"style": {
+				"navigationBarTitleText": "成绩排行",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	    ,{
-            "path" : "pages/found/scoreSort",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uView",

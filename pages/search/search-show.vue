@@ -5,9 +5,11 @@
 				<u-tr>
 					<u-th>名称</u-th>
 					<u-th>分类</u-th>
+					<u-th>分类</u-th>
 				</u-tr>
 				<u-tr v-for="(item,index) in showDate">
 					<u-td>{{item.garbageName}}</u-td>
+					<u-td>{{item.categroyName}}</u-td>
 					<u-td>{{item.categroyName}}</u-td>
 				</u-tr>
 			</u-table>

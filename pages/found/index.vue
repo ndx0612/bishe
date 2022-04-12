@@ -73,8 +73,9 @@
 			nextProblem() {
 				if (this.goodsIndex >= 8) {
 					this.nextQuestion = '提交'
-					// 跳转页面
+					// 提交分数跳转页面
 					if (this.goodsIndex == 9) {
+						this.$u.vuex('vuex_score', this.score); // 将成绩存入vuex中
 						this.goodsIndex = 0;
 						this.score = 0;
 						uni.navigateTo({
@@ -82,17 +83,15 @@
 						});
 					}
 				}
-				console.log(this.goodsIndex);
 				if (this.value == '可回收物') {
 					this.goodsIndex++;
 					this.value = '';
 					this.score += 10;
-					this.$u.vuex('vuex_score', this.score); // 将成绩存入vuex中
 				} else {
 					this.goodsIndex++;
 					this.value = '';
 				}
-				console.log('score:' + this.score)
+				console.log(this.score)
 			}
 		}
 	}
