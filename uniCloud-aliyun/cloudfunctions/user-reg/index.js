@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
 	const {
 		from
 	} = event;
-	
+
 	const res = await collection.where({
 		loginName: from.name,
 	}).get()
@@ -26,7 +26,8 @@ exports.main = async (event, context) => {
 		"author_name": "用户" + mm, // 默认用户名
 		"avatar": "//img3.sycdn.imooc.com/54584e2c00010a2c02200220-160-160.jpg", // 默认头像
 		"gender": "男",
-		"phone": ""
+		"phone": "",
+		"score": 0
 	}
 
 	collection.add({

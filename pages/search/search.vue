@@ -30,15 +30,15 @@
 		data() {
 			return {
 				list: [{
-						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+						image: '../../static/01.png',
 						title: '轮播图1'
 					},
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
+						image: '../../static/02.png',
 						title: '轮播图2'
 					},
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
+						image: '../../static/03.png',
 						title: '标题3'
 					}
 				],
