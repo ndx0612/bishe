@@ -1,40 +1,23 @@
 <template>
 	<view class="lisiItem">
-		<view class="u-border-bottom" v-for="(news,i) in newsList" :key="i">
-			<!-- 三图标签 -->
-			<view class="three-img ul-item" v-if="news.imgs.length>=3"
-				@click="goOtherPage('/pages/article/fullText',{url:news.url})">
+		<view class="u-border-bottom ul-item" v-for="(news,i) in newsList" :key="i">
+			<view class="three-img" @click="goOtherPage('/pages/article/fullText',{url:news.url})">
 				<text class="img-title" v-html="news.title"></text>
 				<view class="three-image">
-					<u-image width="228rpx" height="177rpx" :src="news.imgs[0]"></u-image>
-					<u-image width="228rpx" height="177rpx" :src="news.imgs[1]"></u-image>
-					<u-image width="228rpx" height="177rpx" :src="news.imgs[2]"></u-image>
-				</view>
-				<text class="img-media">来源：{{news.source}}</text>
-				<text class="img-media">浏览量：{{news.viewNums}}</text>
-			</view>
-
-			<!-- 单图模式 -->
-			<view class="three-img ul-item" v-if="news.imgs.length<3"
-				@click="goOtherPage('/pages/article/fullText',{url:news.url})">
-				<text class="img-title" v-html="news.title"></text>
-				<view class="three-image">
-					<u-image width="228rpx" height="177rpx" :src="news.imgs[0]"></u-image>
-					<view class="u-line-5 text-width">
-						{{news.synopsis}}
+					<u-image width="228rpx" height="177rpx" :src="news.picUrl"></u-image>
+					<view class=" text-width">
+						{{news.description}}
 					</view>
 				</view>
-				<text class="img-media">来源：{{news.source}}</text>
-				<text class="img-media">浏览量：{{news.viewNums}}</text>
+				<text class="img-media">时间：{{news.ctime}}</text>
 			</view>
-
 		</view>
 	</view>
 </template>
 
 <script>
 	export default {
-		name: "NewsCard",
+		name: "TianData",
 		data() {
 			return {
 
@@ -109,7 +92,7 @@
 		color: #999999;
 		margin: 20rpx;
 	}
-	
+
 	.ul-item {
 		padding: 10rpx;
 	}

@@ -11,6 +11,8 @@
 						<!-- {{item.name}} -->
 						<NewsCard :newsList="news" v-if="index==0"></NewsCard>
 						<RecommendedNews :newsList="news" v-if="index==1"></RecommendedNews>
+						<TianData :newsList="tianData" v-if="index==0"></TianData>
+						<!-- <u-loadmore :status="status" @click="loadMoredata" /> -->
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -30,7 +32,10 @@
 					name: '环保百科',
 				}],
 				activeIndex: 0,
-				news: []
+				news: [],
+				tianData: [],
+				page: 1,
+				status: 'loadmore',
 			}
 		},
 		onLoad() {
@@ -40,7 +45,8 @@
 					// console.log(res.result.data)
 					this.news = res.result.data;
 				}
-			})
+			});
+			this.getTiandata()
 		},
 		methods: {
 			change(index) {
@@ -51,7 +57,21 @@
 					current
 				} = e.detail;
 				this.activeIndex = current;
-			}
+			},
+			getTiandata() {
+				this.$u.get('http://api.tianapi.com/lajifenleinews/index', {
+					// 发送参数可以不填写
+					key: 'c498f8d96e8d9ad2368513957311caf3',
+					num: 20,
+					page: this.page
+				}).then(res => {
+					console.log(res);
+					this.tianData = res.newslist;
+				});
+			},
+			loadMoredata() {
+				console.log('123')
+			},
 		}
 	}
 </script>

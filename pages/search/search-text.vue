@@ -1,103 +1,42 @@
-<!-- 已关闭 -->
 <template>
-	<view>
-		<view class="cu-bar bg-darkGray search" style="margin: 20px;">
-			<view class="search-form  round">
-				<text class="cuIcon-search text-green"></text>
-				<input @confirm="seachList()" confirmType="search" v-model="searchText" :focus="true"
-					placeholder="输入垃圾名称" type="text"></input>
-			</view>
+	<view class="wrap">
+		<view class="item u-border-bottom" v-for="(item, index) in list" :key="index">
+			{{'第' + item + '条数据'}}
 		</view>
-
-		<view class="filter-view" v-for="(item,index) in searchResult">
-			<view class="item-view item-o bg-white" v-if="index%2==0">
-				<text>{{item.garbageName}}</text>
-				<text>[{{item.categroyName}}]</text>
-			</view>
-
-			<view class="item-view item-ji bg-grey" v-else>
-				<text>{{item.garbageName}}</text>
-				<text>[{{item.categroyName}}]</text>
-			</view>
-		</view>
-
+		<u-loadmore :status="status" />
 	</view>
 </template>
 
 <script>
-	const searchGarbage = require('@/utils/garbage-search.js');
 	export default {
 		data() {
 			return {
-				searchText: '',
-				searchResult: []
-			};
-		},
-		onLoad(parms) {
-			let that = this;
-			if (this.$Route.query.name) {
-				this.searchText = this.$Route.query.name
-				this.seachList();
+				status: 'loadmore',
+				list: 15,
+				page: 0
 			}
-
 		},
-		onUnload() {
-
-		},
-		methods: {
-			seachList() {
-				let that = this;
-				searchGarbage.search(that.searchText, function success(res) {
-					console.log('searchResult:' + res);
-					that.searchResult = res;
-				});
-
-			}
-
+		onReachBottom() {
+			if (this.page >= 3) return;
+			this.status = 'loading';
+			this.page = ++this.page;
+			setTimeout(() => {
+				this.list += 10;
+				if (this.page >= 3) this.status = 'nomore';
+				else this.status = 'loading';
+			}, 2000)
 		}
 	}
 </script>
 
-<style lang="scss">
-	.bg-darkGray {
-		background-color: #f6f6f6;
-		color: #ffffff;
+<style lang="scss" scoped>
+	.wrap {
+		padding: 24rpx;
 	}
 
-	.cu-bar .search-form {
-		background-color: #ffffff;
-	}
-
-	.filter-view {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.item-view {
-		display: flex;
-		flex-direction: row;
-		padding: 20rpx 50rpx;
-		height: 90rpx;
-		align-items: center;
-	}
-
-	.img {
-		height: 50rpx;
-		width: 50rpx;
-		margin-right: 30rpx;
-	}
-
-	.item-ji {
-		background-color: #f6f6f6;
-		color: black;
-	}
-
-	.cu-dialog {
-		width: 300rpx;
-	}
-
-	.bg-img {
-		width: 300rpx;
-		height: 300rpx;
+	.item {
+		padding: 24rpx 0;
+		color: $u-content-color;
+		font-size: 28rpx;
 	}
 </style>
