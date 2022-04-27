@@ -64,7 +64,7 @@
 		}, {
 			"path": "pages/center/about",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "关于",
 				"enablePullDownRefresh": false
 			}
 		}, {
