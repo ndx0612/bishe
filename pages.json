@@ -133,25 +133,28 @@
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
-			"pagePath": "pages/home/index",
-			"iconPath": "static/home.png", // 选中之前图标
-			"selectedIconPath": "static/home_s.png", // 选中之后图标
-			"text": "首页"
-		}, {
-			"pagePath": "pages/search/search",
-			"iconPath": "static/search.png",
-			"selectedIconPath": "static/search_s.png",
-			"text": "搜索"
-		}, {
-			"pagePath": "pages/found/index",
-			"iconPath": "static/discover.png",
-			"selectedIconPath": "static/discover_s.png",
-			"text": "发现"
-		}, {
-			"pagePath": "pages/center/index",
-			"iconPath": "static/user.png",
-			"selectedIconPath": "static/user_s.png",
-			"text": "我"
-		}]
+				"pagePath": "pages/search/search",
+				"iconPath": "static/search.png",
+				"selectedIconPath": "static/search_s.png",
+				"text": "搜索"
+			},
+			{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/home.png", // 选中之前图标
+				"selectedIconPath": "static/home_s.png", // 选中之后图标
+				"text": "资讯"
+			},
+			{
+				"pagePath": "pages/found/index",
+				"iconPath": "static/discover.png",
+				"selectedIconPath": "static/discover_s.png",
+				"text": "答题"
+			}, {
+				"pagePath": "pages/center/index",
+				"iconPath": "static/user.png",
+				"selectedIconPath": "static/user_s.png",
+				"text": "我"
+			}
+		]
 	}
 }
