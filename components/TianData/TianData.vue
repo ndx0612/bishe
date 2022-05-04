@@ -5,11 +5,12 @@
 				<text class="img-title" v-html="news.title"></text>
 				<view class="three-image">
 					<u-image width="228rpx" height="177rpx" :src="news.picUrl"></u-image>
-					<view class=" text-width">
-						{{news.description}}
+					<view class="text-width">
+						{{news.description}}...
 					</view>
 				</view>
-				<text class="img-media">时间：{{news.ctime}}</text>
+				<span class="img-media">新浪网</span>
+				<span class="img-media">{{timediffer(new Date(news.ctime))}}</span>
 			</view>
 		</view>
 	</view>
@@ -35,7 +36,36 @@
 			},
 			isSave() {
 				console.log('e')
-			}
+			},
+						// 时差计算(传入时间戳)
+						timediffer(last, now) {
+							const options = {
+								year: '年前',
+								month: '个月前',
+								day: '天前',
+								hour: '小时前',
+								minute: '分钟前',
+								second: '秒前',
+								just: '刚刚',
+							}
+							if (!now) {
+								var now = new Date();
+							}
+							const timer = (now - last) / 1000; // 获取秒数
+							let tip = '';
+							if (timer <= 0 || Math.floor(timer / 60) <= 0) { // 小于60s,刚刚
+								tip = options.just;
+							} else if (timer < 60 * 60) {
+								tip = Math.floor(timer / 60) + `${options.minute}`;
+							} else if (timer < 60 * 60 * 24) {
+								tip = Math.floor(timer / 3600) + `${options.hour}`;
+							} else if (timer < 60 * 60 * 24 * 30) {
+								tip = Math.ceil(timer / 86400) + `${options.day}`;
+							} else {
+								tip = Math.floor(timer / (86400 * 24)) + `${options.month}`;
+							}
+							return tip;
+						}
 		}
 	}
 </script>
@@ -43,7 +73,8 @@
 <style lang="scss" scoped>
 	.text-width {
 		width: 460rpx;
-		margin: 20rpx;
+		margin: 0 20rpx;
+		line-height: 1.5;
 	}
 
 	.set-width {
@@ -79,7 +110,6 @@
 		.three-image {
 			margin: 20rpx 0;
 			display: flex;
-			justify-content: space-between;
 		}
 	}
 

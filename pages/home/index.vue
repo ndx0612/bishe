@@ -7,11 +7,14 @@
 			<swiper class="swiper-container" :current="activeIndex" @change="changeCurrentIndex">
 				<swiper-item v-for="(item,index) in list" :key="index">
 					<!-- 滚动区域 -->
-					<scroll-view class="swiper-container-list" scroll-y="true">
+					<scroll-view class="swiper-container-list" scroll-y="true" @scrolltolower="onreachBottom">
 						<!-- {{item.name}} -->
 						<NewsCard :newsList="news" v-if="index==0"></NewsCard>
 						<RecommendedNews :newsList="news" v-if="index==1"></RecommendedNews>
+						<u-loadmore v-if="index==1" :status="nomore" />
 						<TianData :newsList="tianData" v-if="index==0"></TianData>
+						<u-loadmore v-if="index==0" :status="status" />
+
 						<view v-if="index==2">
 							<view class="card" v-for="(item,index) in cards" :key="index">
 								<view class="card-title">
@@ -34,6 +37,9 @@
 	export default {
 		data() {
 			return {
+				status: 'loadmore',
+				nomore: 'nomore',
+				page: 1,
 				list: [{
 					name: '最新',
 				}, {
@@ -63,7 +69,7 @@
 						instructions: "主要包括：受污染与无法再生的纸张(纸杯、照片、相册、尿片等)。受污染或其他不可回收的玻璃、废旧衣物与其他纺织品、破旧陶瓷品、一次性餐具、贝壳、烟头、灰土等。其它垃圾主要的处理途径：可燃部分焚烧发电，不可燃部分卫生填埋",
 					},
 				],
-				
+
 			}
 		},
 		onLoad() {
@@ -90,16 +96,26 @@
 				this.$u.get('http://api.tianapi.com/lajifenleinews/index', {
 					// 发送参数可以不填写
 					key: 'c498f8d96e8d9ad2368513957311caf3',
-					num: 20,
+					num: 10,
 					page: this.page
 				}).then(res => {
 					console.log(res);
-					this.tianData = res.newslist;
+					this.tianData.push(...res.newslist);
 				});
 			},
 			loadMoredata() {
 				console.log('123')
 			},
+			onreachBottom() {
+				if (this.activeIndex == 0) {
+					this.page++;
+					this.status = 'loading';
+					// this.getTiandata()
+					setTimeout(() => {
+						this.getTiandata()
+					}, 800)
+				}
+			}
 		}
 	}
 </script>

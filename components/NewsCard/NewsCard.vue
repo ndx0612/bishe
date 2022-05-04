@@ -6,26 +6,24 @@
 				@click="goOtherPage('/pages/article/fullText',{url:news.url})">
 				<text class="img-title" v-html="news.title"></text>
 				<view class="three-image">
-					<u-image width="228rpx" height="177rpx" :src="news.imgs[0]"></u-image>
-					<u-image width="228rpx" height="177rpx" :src="news.imgs[1]"></u-image>
-					<u-image width="228rpx" height="177rpx" :src="news.imgs[2]"></u-image>
+					<u-image width="218rpx" height="177rpx" :src="news.imgs[0]"></u-image>
+					<u-image width="218rpx" height="177rpx" :src="news.imgs[1]"></u-image>
+					<u-image width="218rpx" height="177rpx" :src="news.imgs[2]"></u-image>
 				</view>
 				<text class="img-media">来源：{{news.source}}</text>
-				<text class="img-media">浏览量：{{news.viewNums}}</text>
 			</view>
 
 			<!-- 单图模式 -->
 			<view class="three-img ul-item" v-if="news.imgs.length<3"
 				@click="goOtherPage('/pages/article/fullText',{url:news.url})">
 				<text class="img-title" v-html="news.title"></text>
-				<view class="three-image">
+				<view class="one-image">
 					<u-image width="228rpx" height="177rpx" :src="news.imgs[0]"></u-image>
 					<view class="u-line-5 text-width">
 						{{news.synopsis}}
 					</view>
 				</view>
 				<text class="img-media">来源：{{news.source}}</text>
-				<text class="img-media">浏览量：{{news.viewNums}}</text>
 			</view>
 
 		</view>
@@ -58,8 +56,13 @@
 </script>
 
 <style lang="scss" scoped>
+	.one-image{
+		display: flex;
+		align-items: center;
+	}
+	
 	.text-width {
-		width: 460rpx;
+		width: 440rpx;
 		margin: 20rpx;
 	}
 
