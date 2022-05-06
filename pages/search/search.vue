@@ -31,15 +31,15 @@
 			return {
 				list: [{
 						image: '../../static/01.png',
-						title: '轮播图1'
+						title: '落实环保责任 完善环保制度'
 					},
 					{
 						image: '../../static/02.png',
-						title: '轮播图2'
+						title: '绿色出行'
 					},
 					{
 						image: '../../static/03.png',
-						title: '标题3'
+						title: '低碳，让生活更美好'
 					}
 				],
 				keyword: '',
@@ -86,7 +86,9 @@
 				uni.chooseImage({
 					success(res) {
 						console.log(res.tempFilePaths[0]);
-
+						uni.showLoading({
+							title: '图片上传中'
+						})
 						// 上传图片到云端
 						// uniCloud.uploadFile({
 						// 	cloudPath: '01.png', // 图片名称
@@ -118,6 +120,7 @@
 									}
 								})
 								.then(res => {
+									uni.hideLoading();
 									let objArr = res.result.data.result;
 									const keyMap = {
 										keyword: "label",
