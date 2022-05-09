@@ -1,13 +1,9 @@
 <template>
 	<view>
-		<!-- 		<view>
-			用户id为：{{vuex_userId}}
-		</view>
-		<u-button @click="modifyVuex">修改变量</u-button>
-		<u-toast ref="uToast" /> -->
-
 		<view class="question-box">
-			<text>{{goodsIndex+1}}.{{goods[goodsIndex]}}属于什么类型垃圾？</text>
+			<view class="text">
+				<text>{{goodsIndex+1}}.{{goods[goodsIndex]}}属于什么类型垃圾？</text>
+			</view>
 			<view>
 				<u-radio-group class="question-options" v-model="value" @change="radioGroupChange">
 					<u-radio class="question-li" @change="radioChange" v-for="(item, index) in list" :key="index"
@@ -71,16 +67,19 @@
 				// console.log(e);
 			},
 			nextProblem() {
+				// 第九题的时候变成提交
 				if (this.goodsIndex >= 8) {
 					this.nextQuestion = '提交'
 					// 提交分数跳转页面
-					if (this.goodsIndex == 9) {
+					if (this.goodsIndex >= 9) {
 						this.$u.vuex('vuex_score', this.score); // 将成绩存入vuex中
 						this.goodsIndex = 0;
 						this.score = 0;
+						this.value = '';
 						uni.navigateTo({
 							url: "/pages/found/showScore",
 						});
+						return;
 					}
 				}
 				if (this.value == '可回收物') {
@@ -98,6 +97,12 @@
 </script>
 
 <style lang="scss" scoped>
+	.text {
+		font-size: 32rpx;
+		text-align: center;
+	}
+
+
 	.question-box {
 		width: 600rpx;
 		height: 800rpx;

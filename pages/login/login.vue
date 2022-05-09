@@ -39,7 +39,7 @@
 		onLoad() {
 			if (this.vuex_userId) {
 				this.$u.route({
-					url: 'pages/home/index',
+					url: 'pages/search/search',
 					type: 'reLaunch'
 				})
 			}
@@ -64,7 +64,7 @@
 							this.$refs.uToast.show({
 								title: '登录成功',
 								type: 'success',
-								url: 'pages/home/index',
+								url: 'pages/search/search',
 								isTab: true
 							})
 						} else {
