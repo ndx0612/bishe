@@ -2,7 +2,7 @@
 	<view>
 		<view class="question-box">
 			<view class="text">
-				<text>{{goodsIndex+1}}.{{goods[goodsIndex]}}属于什么类型垃圾？</text>
+				<text>{{goodsIndex+1}}.{{goods[goodsIndex]?goods[goodsIndex].subject:''}}属于什么类型垃圾？</text>
 			</view>
 			<view>
 				<u-radio-group class="question-options" v-model="value" @change="radioGroupChange">
@@ -42,25 +42,39 @@
 				],
 				// u-radio-group的v-model绑定的值如果设置为某个radio的name，就会被默认选中
 				value: '',
-				goods: ['书本', '报纸', '铝', '啤酒瓶', '纸巾', '塑料瓶', '易拉罐', '玻璃', '废铁', 'A4纸'],
+				goods: [],
 				goodsIndex: 0,
 				score: 0,
 				nextQuestion: '下一题',
 			};
 		},
+		onLoad() {
+			// 提交成绩
+			let that = this;
+			uniCloud.callFunction({
+				name: 'get_qusetoin',
+				data: {},
+				success: (res) => {
+					this.goods = this.arrDisorder(res.result.data)
+					console.log(this.goods)
+					// this.showDate = that.sortObj(res.result.data, 'score')
+				}
+			})
+		},
 		methods: {
-			modifyVuex() {
-				this.$refs.uToast.show({
-					title: '密码修改成功',
-					type: 'success',
-				})
-				// const currentNum = Math.random().toString().substr(2, 6);
-				// console.log(this.vuex_userId)
-				// console.log(currentNum)
-			},
 			// 选中某个单选框时，由radio时触发
 			radioChange(e) {
 				// console.log(e);
+			},
+			arrDisorder(arr) {
+				var newArr = arr
+				for (let i = 0; i < newArr.length; i++) {
+					var index = Math.floor(Math.random() * newArr.length);
+					var swap = newArr[i];
+					newArr[i] = newArr[index];
+					newArr[index] = swap;
+				}
+				return newArr;
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
@@ -82,7 +96,7 @@
 						return;
 					}
 				}
-				if (this.value == '可回收物') {
+				if (this.value == this.goods[this.goodsIndex].answer) {
 					this.goodsIndex++;
 					this.value = '';
 					this.score += 10;
