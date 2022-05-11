@@ -3,16 +3,16 @@
 
 		<u-form class="form-info" :model="form" ref="uForm" :label-width='160' label-align='center'>
 			<u-form-item label="登录账号">
-				<u-input v-model="form.id" disabled/>
+				<u-input v-model="form.id" disabled />
 			</u-form-item>
 			<u-form-item label="用户名">
 				<u-input v-model="form.name" />
 			</u-form-item>
 			<u-form-item label="分 数">
-				<u-input v-model="form.score" disabled/>
+				<u-input v-model="form.score" disabled />
 			</u-form-item>
 			<u-form-item label="性 别">
-				<u-radio-group v-model="value" @change="radioGroupChange">
+				<u-radio-group v-model="form.value" @change="radioGroupChange">
 					<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.name"
 						:disabled="item.disabled">
 						{{item.name}}
@@ -34,7 +34,8 @@
 				form: {
 					id: '', // 登录账号
 					name: '', // 用户名
-					score: '' // 分数
+					score: '', // 分数
+					value: '男',
 				},
 				list: [{
 						name: '男',
@@ -46,7 +47,6 @@
 					},
 				],
 				// u-radio-group的v-model绑定的值如果设置为某个radio的name，就会被默认选中
-				value: '男',
 			};
 		},
 		onLoad() {
@@ -56,6 +56,7 @@
 					id: this.vuex_userId
 				},
 				success: (res) => {
+					console.log(res)
 					this.form.id = res.result.data[0].loginName;
 					this.form.name = res.result.data[0].author_name;
 					this.form.score = res.result.data[0].score;
@@ -82,6 +83,7 @@
 						id: this.vuex_userId
 					},
 					success: (res) => {
+						console.log(res)
 						this.$refs.uToast.show({
 							title: '信息修改成功',
 							type: 'success',
