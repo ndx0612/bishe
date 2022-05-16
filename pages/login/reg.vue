@@ -46,6 +46,11 @@
 						title: '两次输入密码不一样',
 						type: 'warning',
 					})
+				} else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(this.form.password)) {
+					this.$refs.uToast.show({
+						title: '密码必须大于6位，且包含数字和字母',
+						type: 'warning',
+					})
 				} else {
 					// 输入没有问题
 					let userInfo = this.$u.deepClone(this.form);
