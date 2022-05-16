@@ -1,3 +1,3 @@
 # 毕业设计作品
 
-## Uni-app + uView + uniCloud + baiduAPI
+## uni-app + uView + unicloud + baiduAPI
